@@ -1,0 +1,27 @@
+const { chromium } = require('playwright');
+
+(async () => {
+    const browser = await chromium.launch({ headless: false });
+    const page = await browser.newPage();
+
+    console.log("📌 Mueve el cursor sobre la rueda ⚙ y observa las coordenadas en la consola.");
+    console.log("⏳ Espera... La posición se actualizará cada 2 segundos.");
+    console.log("🔎 Cuando tengas la coordenada exacta, anótala y presiona CTRL + C para salir.");
+
+    try {
+        while (true) {
+            const coords = await page.evaluate(() => {
+                return new Promise(resolve => {
+                    document.addEventListener('mousemove', event => {
+                        resolve({ x: event.clientX, y: event.clientY });
+                    }, { once: true });
+                });
+            });
+
+            console.log(`📍 Coordenadas actuales: X=${coords.x}, Y=${coords.y}`);
+            await new Promise(resolve => setTimeout(resolve, 2000)); // Esperar 2 segundos
+        }
+    } catch (error) {
+        console.log("\n✅ Coordenadas obtenidas. Ahora puedes usarlas en el script.");
+    }
+})();
