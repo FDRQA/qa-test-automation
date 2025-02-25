@@ -1,0 +1,8 @@
+import pyautogui
+import time
+
+print("📌 Mueve el cursor sobre el botón 'Iniciar sesión' y espera 5 segundos...")
+time.sleep(5)  # Tienes 5 segundos para colocar el cursor sobre el botón
+x, y = pyautogui.position()  # Captura la posición actual del cursor
+print(f"✅ Coordenadas capturadas: x={x}, y={y}")
+
